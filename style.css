@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+/** NAV **/
+nav {
+    background-color: #00a;
+    text-align: center;
+    position: sticky;
+    box-shadow: 0px 2px 5px #0004;
+}
+
+nav * {
+    display: inline-block;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li * {
+    font-weight: bold;
+    color: white;
+    display: block;
+    padding: 10px 15px;
+}
+
+nav li *:hover {
+    background-color: #008;
+    transition: 0.2s;
+    border-radius: 6px;
+}
+
+body {
+    margin: auto;
+}
+
+main {
+    max-width: 800px;
+    padding: 30px;
+    margin: 10px auto;
+    box-shadow: 1px 2px 5px #0004;
+    border-radius: 4px;
+}
+
+button, select, option {
+    background-color: #33e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 9px;
+    margin: 2px;
+}
+
+button:hover, select:hover, option:hover {
+    background-color: #00c;
+    transition: 0.1s;
+}
+
+option {
+    background-color: #ddf;
+    color: #000;
+}
+
+input {
+    border: 1px solid;
+    border-radius: 1px;
+    border-radius: 4px;
+    padding: 6px 9px;
+    margin: 2px;
+}
+
+textarea {
+    border: 1px solid;
+    border-radius: 1px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 2px;
+    resize: none;
+}
+
+.buttons {
+    text-align: center;
+}

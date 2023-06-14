@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gerador de CPF</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Páginal Inicial</a>
+            <li><a href="cpf.html">Gerador de CPF</a>
+            <li><a href="binary.html">Conversor Binário</a>
+            <li><a href="hamming.html">Código de Hamming</a>
+        </ul>
+    </nav>
+    <main>
+        <h1>Gerador de CPF</h1>
+        Insira os oito primeiros digitos: <input type="text" name="CPF" id="cpf">
+        <br>
+        Selecione a Unidade Federativa: <select name="Unidade Federativa" id="uf">
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+        </select>
+        <br>
+        <button onclick="getCPF()">Gerar</button>
+        <br>
+        O CPF é: <span id="cpfGenerated"></span>
+    </main>
+    <script>
+        const digitUF = {
+            RS: 0,
+            DF: 1, GO: 1, MT: 1, MS: 1, TO: 1,
+            AC: 2, AP: 2, AM: 2, PA: 2, RO: 2, RR: 2,
+            CE: 3, MA: 3, PI:3,
+            AL: 4, PB: 4, PE:4, RN: 4,
+            BA: 5, SE: 5,
+            MG: 6,
+            ES: 7, RJ: 7,
+            SP: 8,
+            PR: 9, SC: 9
+        };
+        
+        function getUF() {
+            let uf = document.getElementById("uf").value;
+            return digitUF[uf];
+        }
+
+        function getCPF() {
+            let input = document.getElementById("cpf").value;
+            let pattern = /[0-9]/g;
+            cpf = input.match(pattern);
+            cpf = cpf.splice(0,8);
+            cpf.push(getUF());
+            cpf = cpf.map(digit => parseInt(digit));
+            let uf = document.getElementById("uf").value;
+            let x1 = 0;
+            let x2 = 0;
+            for (let i=0; i < 9; i++) {
+                x2 += cpf[i] * (9 - (i % 10));
+            }
+            x2 = x2 % 11;
+            cpf.push(x2 % 10);
+            for (let i=0; i < 10; i++) {
+                x1 += cpf[i] * (9 - ((i+1) % 10));
+            }
+            x1 = x1 % 11;
+            cpf.splice(-1, 0, x1 % 10);
+            let output = "";
+            output = [
+                [cpf[0], cpf[1], cpf[2]].join(""),
+                [cpf[3], cpf[4], cpf[5]].join(""),
+                [cpf[6], cpf[7], cpf[8]].join(""),
+            ].join(".");
+            output = [output, [cpf[9], cpf[10]].join("")].join("-");
+            document.getElementById("cpfGenerated").innerHTML = output;
+        }
+    </script>
+</body>
+</html>

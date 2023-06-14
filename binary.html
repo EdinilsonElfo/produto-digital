@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Produto Digital</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Páginal Inicial</a>
+            <li><a href="cpf.html">Gerador de CPF</a>
+            <li><a href="binary.html">Conversor Binário</a>
+            <li><a href="hamming.html">Código de Hamming</a>
+        </ul>
+    </nav>
+    <main>
+        <h1>Conversor Binário</h1>
+        <div class="buttons">
+            <button onClick="stringBinary()">Texto para Binário</button>
+            <button onClick="binaryString()">Binário para Texto</button>
+        </div>
+        <br>
+        <textarea name="text" id="String" cols="50" rows="20"></textarea>
+        <textarea name="text" id="Binary" cols="50" rows="20"></textarea>
+    </main>
+    <script>
+        function stringBinary() {
+            let input = document.getElementById("String").value;
+            let output = document.getElementById("Binary");
+
+            let string = input.split("");
+
+            output.value = "";
+            output.value = string.map(char => {
+                const bin = char.charCodeAt(0).toString(2);
+                let pad = 0;
+                if (bin.length !== 8) pad = 8 - (bin.length % 8);
+                return "0".repeat(pad) + bin;
+            }).join(" ")
+        }
+
+        function binaryString() {
+            let input = document.getElementById("Binary").value;
+            let output = document.getElementById("String");
+
+            let binary = input.split(" ");
+
+            output.value = binary.map(bits => {
+                let power2 = 1;
+                let byte = 0;
+                for (let i = bits.length - 1; i >= 0; i--) {
+                    byte += bits[i] * power2;
+                    power2 = 2 * power2;
+                }
+                return String.fromCharCode(byte);
+            }).join("");
+        }
+    </script>
+</body>
+</html>

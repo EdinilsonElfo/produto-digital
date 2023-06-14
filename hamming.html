@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Produto Digital</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Páginal Inicial</a>
+            <li><a href="cpf.html">Gerador de CPF</a>
+            <li><a href="binary.html">Conversor Binário</a>
+            <li><a href="hamming.html">Código de Hamming</a>
+        </ul>
+    </nav>
+    <main>
+        <h1>Cógido de Hamming</h1>
+        <div class="buttons">
+            <button onClick="generateCode()">Codificar</button>
+            <button onClick="decode()">Decodificar</button>
+        </div>
+        <br>
+        <textarea name="text" id="Source" cols="50" rows="20"></textarea>
+        <textarea name="text" id="Code" cols="50" rows="20"></textarea>
+    </main>
+    <script>
+        getVector()
+
+        function getVector() {
+            let input = document.getElementById("Source").value;
+            let output = document.getElementById("Code");
+            let sourceByte = input.split(" ");
+            let sourceBit = sourceByte.map( byte => byte.split("") );
+            let sourceVector = [];
+            sourceBit.map( byte => {
+                sourceVector.push(byte.slice(0,4).map( bit => parseInt(bit)));
+                sourceVector.push(byte.slice(4,8).map( bit => parseInt(bit)));
+            });
+            return sourceVector;
+        }
+
+        getVector
+
+        function codingHamming74(inputVector) {
+            let outputVector = [];
+            outputVector.push((inputVector[0]) % 2);
+            outputVector.push((inputVector[1]) % 2);
+            outputVector.push((inputVector[2]) % 2);
+            outputVector.push((inputVector[3]) % 2);
+            outputVector.push((inputVector[0] + inputVector[1] + inputVector[3]) % 2);
+            outputVector.push((inputVector[0] + inputVector[2] + inputVector[3]) % 2);
+            outputVector.push((inputVector[1] + inputVector[2] + inputVector[3]) % 2);
+            return outputVector;
+        }
+
+        function parityCheck(inputVector) {
+            let syndromeVector = [];
+            syndromeVector.push((inputVector[0] + inputVector[1] + inputVector[3] + inputVector[4]) % 2);
+            syndromeVector.push((inputVector[0] + inputVector[2] + inputVector[3] + inputVector[5]) % 2);
+            syndromeVector.push((inputVector[1] + inputVector[2] + inputVector[3] + inputVector[6]) % 2);
+            return syndromeVector;
+        }
+        
+        function findError(syndromeVector) {
+            if (syndromeVector.toString() === [1,1,0].toString()) return 0;
+            if (syndromeVector.toString() === [1,0,1].toString()) return 1;
+            if (syndromeVector.toString() === [0,1,1].toString()) return 2;
+            if (syndromeVector.toString() === [1,1,1].toString()) return 3;
+            if (syndromeVector.toString() === [1,0,0].toString()) return 4;
+            if (syndromeVector.toString() === [0,1,0].toString()) return 5;
+            if (syndromeVector.toString() === [0,0,1].toString()) return 6;
+        }
+
+        function correctError(inputVector, syndromeVector) {
+            const errorPosition = findError(syndromeVector);
+            let correctedVector = [];
+            for (let i = 0; i < 7; i++) {
+                if (i === errorPosition) correctedVector.push((inputVector[i] + 1) % 2);
+                else correctedVector.push(inputVector[i]);
+            }
+            return correctedVector;
+        }
+
+        function generateCode() {
+            let sourceBox = document.getElementById("Code");
+            let sourceCode = getVector();
+            let hammingCode = sourceCode.map(vector => codingHamming74(vector).join("")).join(" ");
+            sourceBox.value = hammingCode;
+        }
+
+        function decode() {
+            let codeBox = document.getElementById("Code").value;
+            let sourceBox = document.getElementById("Source");
+            let code = codeBox.split(" ");
+            code = code.map( word => word.split("").map(bit => parseInt(bit)) );  // Converte strings para números
+            let syndrome = code.map( word => parityCheck(word) );
+            let correctedVector = [];
+            for (let i=0; i < code.length; i++) {
+                correctedVector.push(correctError(code[i], syndrome[i]));
+            }
+            // Decode
+            let sourceVector = []
+            for (let i=0; i < correctedVector.length; i += 2) {
+                sourceVector.push([correctedVector[i].slice(0,4).join(""), correctedVector[i+1].slice(0,4).join("")].join(""));
+            }
+            sourceBox.value = sourceVector.join(" ");
+            console.log(sourceVector.join(" "))
+        }
+    </script>
+</body>
+</html>
