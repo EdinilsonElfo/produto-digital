@@ -91,3 +91,13 @@ textarea {
 .buttons {
     text-align: center;
 }
+
+
+.quote {
+    text-align: center;
+}
+
+.quote > q {
+    font-family: 'Dancing Script', cursive;
+    font-style: italic;
+}
