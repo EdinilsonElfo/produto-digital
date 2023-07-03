@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Produto Digital</title>
+    <title>Código de Hamming</title>
 </head>
 <body>
     <nav>
@@ -14,13 +14,15 @@
             <li><a href="cpf.html">Gerador de CPF</a>
             <li><a href="binary.html">Conversor Binário</a>
             <li><a href="hamming.html">Código de Hamming</a>
+            <li><a href="about.html">Sobre</a>
         </ul>
     </nav>
     <main>
         <h1>Cógido de Hamming</h1>
+        <p>Este é um codificador e decodificador, ele consegue codificar e decodificar uma mensagem usando o Código de Hamming. Insira a mensagem original na caixa à esquerda, ou a mensagem codificada na caixa à direita.</p>
         <div class="buttons">
-            <button onClick="generateCode()">Codificar</button>
-            <button onClick="decode()">Decodificar</button>
+            <button onClick="generateCode()">Codificar mensagem</button>
+            <button onClick="decode()">Decodificar mensagem</button>
         </div>
         <br>
         <textarea name="text" id="Source" cols="50" rows="20"></textarea>

@@ -14,10 +14,12 @@
             <li><a href="cpf.html">Gerador de CPF</a>
             <li><a href="binary.html">Conversor Binário</a>
             <li><a href="hamming.html">Código de Hamming</a>
+            <li><a href="about.html">Sobre</a>
         </ul>
     </nav>
     <main>
         <h1>Gerador de CPF</h1>
+        <p>Este é um gerador de CPF, com base nos oito primeiros digítos e no estado selecionado ele consegue calcular os dois últimos digitos do cpf.</p>
         Insira os oito primeiros digitos: <input type="text" name="CPF" id="cpf">
         <br>
         Selecione a Unidade Federativa: <select name="Unidade Federativa" id="uf">
@@ -50,9 +52,9 @@
             <option value="TO">Tocantins</option>
         </select>
         <br>
-        <button onclick="getCPF()">Gerar</button>
+        Clique no botão para gerar o cpf: <button onclick="getCPF()">Gerar</button>
         <br>
-        O CPF é: <span id="cpfGenerated"></span>
+        <p>O CPF gerado é: <span id="cpfGenerated"></span></p>
     </main>
     <script>
         const digitUF = {

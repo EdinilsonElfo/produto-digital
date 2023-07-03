@@ -73,7 +73,6 @@ option {
 
 input {
     border: 1px solid;
-    border-radius: 1px;
     border-radius: 4px;
     padding: 6px 9px;
     margin: 2px;
@@ -91,7 +90,6 @@ textarea {
 .buttons {
     text-align: center;
 }
-
 
 .quote {
     text-align: center;
